@@ -71,7 +71,10 @@ def turtle1_poseCallback(data):
                 turtlelist[i].turtle_to_follow = lastTurtle
                 lastTurtle = i + 2
                 rospy.loginfo("Turtle Changed [%s] [%f] [%f]", turtlelist[i].turtle_name, diff, ang)
+		
+		global game_score
 		game_score += 10
+		rospy.loginfo(f"Current score: {game_score}")
                 nextturtleIndex += 1
 		
                 turtlelist.append(mySpawner("turtle" + str(nextturtleIndex)))
