@@ -66,7 +66,6 @@ def turtle1_poseCallback(data):
         if(ang <= -3.14) or (ang > 3.14):
             ang = ang / math.pi
 		if(11<turtle1_pose.x<11.5 or 0<turtle1_pose.y<0.5 or 11<turtle1_pose.y<11.5 or -0.05<turtle1_pose.x<0):
-
 			rospy.wait_for_service("reset")
 			clear_bg = rospy.ServiceProxy('reset', Empty)
 			clear_bg()
@@ -77,8 +76,8 @@ def turtle1_poseCallback(data):
 			rospy.loginfo("|    Game over!     |")
 			rospy.loginfo("|                   |")
 			rospy.loginfo("---------------------\n")
-
-			# rospy.loginfo(f"Score is: {game_score}")
+			global game_score
+			rospy.loginfo(f"Score is: {game_score}")
 			game_score=0
 			
         if (turtlelist[i].state == 1):
@@ -131,8 +130,7 @@ def spawn_turtle_fn():
     
     nextturtleIndex += 1
     turtlelist.append(mySpawner("turtle" + str(nextturtleIndex)))
-    # for i in range(2,10):
-    #     turtlelist.append(mySpawner("turtle" + str(i)))
+
         
     rospy.spin()
 
