@@ -99,8 +99,7 @@ def turtle1_poseCallback(data):
                 twist_data.angular.z = 20 * ang
                   
             turtlelist[i].turtle_velocity(twist_data)
-            turtlelist[i].oldAngle = ang    
-
+            turtlelist[i].oldAngle = ang   
  
 
 def spawn_turtle_fn():
@@ -123,3 +122,4 @@ def spawn_turtle_fn():
 
 if __name__ == "__main__":
     spawn_turtle_fn()
+
