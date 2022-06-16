@@ -4,8 +4,10 @@ import rospy
 from turtlesim.msg import Pose
 from turtlesim.srv import Spawn
 from turtlesim.srv import SetPen
+from std_srvs.srv import Empty
 from geometry_msgs.msg import Twist
 from geometry_msgs.msg import TransformStamped
+import sys
 import random
 import math
 
@@ -14,7 +16,7 @@ turtlelist = []
 lastTurtle = 1
 nextturtleIndex = 1
 game_score=0
-turtlescore=0
+
 class mySpawner:
     def __init__(self, tname):
         self.turtle_name = tname
@@ -65,20 +67,36 @@ def turtle1_poseCallback(data):
         if(ang <= -3.14) or (ang > 3.14):
             ang = ang / math.pi
 
+	
+
+	if(11<turtle1_pose.x<11.5 or -0.05<turtle1_pose.y<0 or 11<turtle1_pose.y<11.5 or -0.05<turtle1_pose.x<0):
+
+	
+				
+		rospy.wait_for_service("reset")
+		clear_bg = rospy.ServiceProxy('reset', Empty)
+		clear_bg()
+		rospy.loginfo("Oops! You hit the wall")
+		rospy.loginfo("\n")
+		rospy.loginfo("---------------------")
+		rospy.loginfo("|                   |")
+		rospy.loginfo("|    Game over!     |")
+		rospy.loginfo("|                   |")
+		rospy.loginfo("---------------------\n")
+		global game_score
+		rospy.loginfo("Score is:"+str(game_score))
+		#game_score=0
+		
+		
         if (turtlelist[i].state == 1):
             if diff < 1.0:
                 turtlelist[i].state = 2
                 turtlelist[i].turtle_to_follow = lastTurtle
                 lastTurtle = i + 2
                 rospy.loginfo("Turtle Changed [%s] [%f] [%f]", turtlelist[i].turtle_name, diff, ang)
-		
-		global game_score
-		game_score += 10
-		rospy.loginfo("Current score")
-		rospy.loginfo(game_score)
                 nextturtleIndex += 1
-		
                 turtlelist.append(mySpawner("turtle" + str(nextturtleIndex)))
+		game_score=game_score+10
         else:
             parPose = turtle1_pose
             if(turtlelist[i].turtle_to_follow != 1):
@@ -99,7 +117,8 @@ def turtle1_poseCallback(data):
                 twist_data.angular.z = 20 * ang
                   
             turtlelist[i].turtle_velocity(twist_data)
-            turtlelist[i].oldAngle = ang   
+            turtlelist[i].oldAngle = ang    
+
  
 
 def spawn_turtle_fn():
@@ -122,4 +141,3 @@ def spawn_turtle_fn():
 
 if __name__ == "__main__":
     spawn_turtle_fn()
-
