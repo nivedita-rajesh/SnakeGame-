@@ -17,3 +17,12 @@ The game makes use of turtlesim and turtlesim_teleop packages  to move a snake t
 4) Create a launch file in the package.
 5) Open a terminal and source it.
 6) Launch the launch file.
+
+## OUTPUT
+<table>
+     <tr>
+          <td><img height="300" src="https://github.com/nivedita-rajesh/SnakeGame-/blob/main/project/Output/image_1.jpeg" /><br /><center><b>Turtle Game</b></center></td>
+          <td><img height="300" src="https://github.com/nivedita-rajesh/SnakeGame-/blob/main/project/Output/image_2.jpeg" /><br /><center><b>Terminal whent the Game is over</b></center></td>
+     </tr>
+    
+ </table>
